@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/ruyisbaros/blog_api_with_typescript_new#readme",
   "dependencies": {
+    "crypto": "^1.0.1",
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.11"
   }
 }

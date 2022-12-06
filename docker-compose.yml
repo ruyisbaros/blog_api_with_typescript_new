@@ -8,10 +8,12 @@ services:
   #service-2    
   frontend:
     build:
-      context: .client/
+      context: ./client
   #service-3  
   nginx:
     image: nginx
+    build: 
+      context: ./nginx
     ports:
       - "5000:80"
     volumes:
@@ -19,3 +21,4 @@ services:
   #service-4
   redis:
     image: redis
+    build: .
