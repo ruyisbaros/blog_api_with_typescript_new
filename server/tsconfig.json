@@ -4,8 +4,8 @@
     "module": "commonjs",
     "lib": ["DOM", "ES2015"],
     "baseUrl": ".",
-    "outDir": "./build",
-    "rootDir": "./server",
+    "outDir": "../build",
+    "rootDir": "./src",
     "strict": true,
     "noImplicitAny": true,
     "noUnusedLocals": false,
@@ -21,6 +21,6 @@
     "resolveJsonModule": true, 
   },
   "include": [
-    "server/**/*"
+    "src/**/*"
   ]
 }

@@ -5,6 +5,9 @@ import cors from "cors"
 import morgan from "morgan"
 import cookie_parser from "cookie-parser"
 
+//Routes
+import routes from "./routes/index"
+
 const app = express()
 
 //Required Middleware
@@ -20,6 +23,8 @@ app.use(express.urlencoded({ extended: true }))
 //DB API
 import "./config/db_set"
 
+//Routes Middleware
+app.use("/api/v1/auth", routes.authRouter)
 
 //Server configuration
 const port=process.env.PORT || 3002

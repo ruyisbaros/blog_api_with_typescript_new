@@ -4,8 +4,8 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "start": "node build/index.js",
-    "dev": "nodemon server/index.ts",
+    "start": "node ../build/index.js",
+    "dev": "nodemon src/index.ts",
     "build": "tsc -p .",
     "postinstall": "npm run build"
   },
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/ruyisbaros/blog_api_with_typescript_new#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
@@ -31,6 +32,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.3",
     "@types/cors": "^2.8.13",
     "@types/dotenv": "^8.2.0",
