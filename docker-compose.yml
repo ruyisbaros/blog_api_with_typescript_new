@@ -3,8 +3,6 @@ services:
   #service-1 
   backend:
     build: .
-    env_file:
-      - ./.env
   #service-2    
   frontend:
     build:
