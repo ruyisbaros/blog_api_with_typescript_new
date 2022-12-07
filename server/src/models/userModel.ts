@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import crypto from "crypto"
 import bcrypt from "bcrypt"
+import { ILogUser } from "../config/interface"
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -37,21 +38,21 @@ const userSchema = new mongoose.Schema({
     resetPasswordTime: Date,
 }, { timestamps: true })
 
-userSchema.pre("save", async function (next) {
+/* userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();
     this.password = await bcrypt.hash(this.password, 10);
 
     next();
-});
+}); */
 
-userSchema.methods.isPasswordTrue = async function (candidatePassword: string) {
+/* userSchema.methods.isPasswordTrue = async function (candidatePassword: string) {
     return await bcrypt.compare(candidatePassword, this.password);
-};
+}; */
 
 //Forgot password
 userSchema.methods.createResetToken = function () {
     //generate crypto token
-    const resetToken:string = crypto.randomBytes(20).toString("hex");
+    const resetToken: string = crypto.randomBytes(20).toString("hex");
     this.resetPasswordToken = crypto
         .createHash("sha256")
         .update(resetToken)
@@ -62,4 +63,4 @@ userSchema.methods.createResetToken = function () {
     return resetToken;
 };
 
-export default mongoose.model("User", userSchema)
+export default mongoose.model<ILogUser>("User", userSchema)

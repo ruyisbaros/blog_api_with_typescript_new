@@ -6,9 +6,9 @@ export const generateActiveToken = (payload: object) => {
 }
 export const generateAccessToken = (payload: object) => {
 
-    return jwt.sign(payload, process.env.JWT_ACCESS_KEY!, { expiresIn: "9d" });
+    return jwt.sign(payload, process.env.JWT_ACCESS_KEY!, { expiresIn: "14d" });
 }
 export const generateReFreshToken = (payload: object) => {
 
-    return jwt.sign(payload, process.env.JWT_REFRESH_KEY!, { expiresIn: "10d" })
+    return jwt.sign(payload, process.env.JWT_REFRESH_KEY!, { expiresIn: "15d" })
 }
