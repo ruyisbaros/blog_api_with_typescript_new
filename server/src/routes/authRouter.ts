@@ -7,7 +7,7 @@ import authController from "../controllers/authController";
 //just to skip user email confirmation check during development, register_dev route
 router.post("/register_dev", validateRegister, userExist, authController.registerDevelopment)
 router.post("/register", validateRegister, userExist, authController.register)
-router.post("/activate_account", authController.activateAccount)
+router.get("/activate_account/:token", authController.activateAccount)
 router.post("/login", validateLogin, authController.login);
 router.post("/logout/:id", authController.logout);
 
