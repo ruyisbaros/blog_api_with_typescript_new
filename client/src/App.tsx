@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -11,6 +13,7 @@ function App() {
   return (
     <div className="mother_container">
       <BrowserRouter>
+        <ToastContainer position="bottom-center" limit={1} />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />

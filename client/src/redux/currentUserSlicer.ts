@@ -1,8 +1,10 @@
+import { IUserLoginResponse } from './../utils/Interfaces';
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   currentUser: "",
   token: "",
+  message: "",
   logging: false,
 };
 
@@ -10,7 +12,7 @@ const currentUserSlicer = createSlice({
   name: "currentUser",
   initialState,
   reducers: {
-    userLoggedStart: (state) => {
+    userLoggedStart: (state: any) => {
       state.logging = true;
     },
     userLoggedFinish: (state) => {
@@ -19,6 +21,7 @@ const currentUserSlicer = createSlice({
     userLoggedSuccess: (state, action) => {
       state.logging = false;
       state.currentUser = action.payload.currentUser;
+      state.message = action.payload.message;
       state.token = action.payload.token;
     },
     refreshToken: (state, action) => {

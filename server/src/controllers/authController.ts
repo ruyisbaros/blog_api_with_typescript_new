@@ -133,7 +133,7 @@ async function loginUser(loggedUser: ILogUser, password: string, res: Response) 
         return res.status(500).json({ message: "Invalid credentials!" })
     }
     const refreshToken = generateReFreshToken({ id: loggedUser._id })
-
+    const access_token = generateAccessToken({ id: loggedUser._id })
     res.cookie("refresh_token", refreshToken, {
         httpOnly: true,
         path: "/api/v1/auth/refresh_token",
@@ -142,7 +142,8 @@ async function loginUser(loggedUser: ILogUser, password: string, res: Response) 
 
     res.status(200).json({
         message: "Login Success",
-        user: { ...loggedUser._doc, password: "" }
+        user: { ...loggedUser._doc, password: "" },
+        access_token
     })
 }
 

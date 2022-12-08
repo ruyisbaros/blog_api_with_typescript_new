@@ -1,0 +1,26 @@
+.auth_login{
+    width: 100%;
+    padding: 2.5rem 0;
+    background: #fdfdfd;
+    display: flex;
+    justify-content: center;
+}
+
+.auth_login .auth_box{
+    background: #fff;
+    max-width: 400px;
+    width: 100%;
+    border:1px solid #ddd;
+    padding: 2.7rem 1.7rem;
+}
+
+.auth_login .pass{
+    position: relative;
+}
+.auth_login .pass small{
+    position: absolute;
+    top: 20%;
+    right: 5px;
+    cursor: pointer;
+    opacity: 0.5;
+}

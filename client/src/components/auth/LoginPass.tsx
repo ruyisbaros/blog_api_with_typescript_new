@@ -1,9 +1,25 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { BiShow, BiHide } from "react-icons/bi";
-
-import { InputChange } from "../../utils/Interfaces";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import {
+  userLoggedFinish,
+  userLoggedStart,
+  userLoggedSuccess,
+} from "../../redux/currentUserSlicer";
+import {
+  InputChange,
+  FormSubmit,
+  ICurrentUser,
+  IUserLoginResponse,
+} from "../../utils/Interfaces";
 
 const LoginPass = () => {
+  const currentUser = useSelector<ICurrentUser>((store) => store.currentUser);
+  const userObj = currentUser as ICurrentUser;
+  console.log(userObj);
+  const dispatch = useDispatch();
   const [logUser, setLogUser] = useState({ account: "", password: "" });
   const [passType, setPassType] = useState(false);
 
@@ -12,14 +28,34 @@ const LoginPass = () => {
     setLogUser({ ...logUser, [name]: value });
   };
   //console.log(logUser);
-  const handleLogin = (e: InputChange) => {
+  const handleLogin = async (e: FormSubmit) => {
     e.preventDefault();
+    try {
+      dispatch(userLoggedStart());
+      const res = await axios.post("/api/v1/auth/login", {
+        ...logUser,
+      });
+      //console.log(res.data);
+      dispatch(userLoggedFinish());
+      dispatch(
+        userLoggedSuccess({
+          currentUser: res.data.user,
+          message: res.data.message,
+          token: res.data.access_token,
+        })
+      );
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data.message || error.response.data[0]);
+    }
   };
 
   return (
-    <form className="w-100 mx-auto">
-      <div className="form-group">
-        <label htmlFor="account">Email | Phone Number</label>
+    <form className="w-100" onSubmit={handleLogin}>
+      <div className="form-group mb-3">
+        <label htmlFor="account" className="form-label">
+          Email | Phone Number
+        </label>
         <input
           type="text"
           name="account"
@@ -29,8 +65,10 @@ const LoginPass = () => {
           onChange={handleLoginInput}
         />
       </div>
-      <div className="form-group">
-        <label htmlFor="password">Password</label>
+      <div className="form-group mb-3">
+        <label htmlFor="password" className="form-label">
+          Password
+        </label>
         <div className="pass">
           <input
             type={passType ? "text" : "password"}
@@ -41,13 +79,13 @@ const LoginPass = () => {
             onChange={handleLoginInput}
           />
           <small onClick={() => setPassType(!passType)}>
-            {passType ? <BiShow /> : <BiHide />}
+            {passType ? <BiShow size={18} /> : <BiHide size={18} />}
           </small>
         </div>
       </div>
       <button
         disabled={logUser.account && logUser.password ? false : true}
-        className="btn btn-dark w-50 mx-auto d-block"
+        className="btn btn-dark w-100 mt-2"
         type="submit"
       >
         Login
