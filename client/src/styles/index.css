@@ -13,3 +13,54 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.link_class{
+  text-decoration: none;
+  color:inherit
+}
+
+.text_area {
+  resize: none;
+  height: 150px;
+  width: 100%;
+  padding: 10px;
+}
+button {
+  border: none;
+}
+.btn,
+button,
+input {
+  cursor: pointer;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+li{
+  list-style-type: none;
+}
+
+.mother_container{
+  padding: 0 2.5rem;
+}
+
+.icon_white {
+  color: white;
+}
+.icon_silver {
+  color: silver;
+}
+.icon_green {
+  color: green;
+}
+.icon_red {
+  color: red;
+}
+.icon_dark {
+  color: gray;
+}
+
+/* Import styles */
+
+@import url("./login.css");
