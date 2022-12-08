@@ -6,7 +6,7 @@ import sendMail from "../alerts/send_email"
 import { generateAccessToken, generateActiveToken, generateReFreshToken } from "../config/token_generator"
 import { validateEmail, validatePhoneNumber } from "../middlewares/validator";
 import { sendSMS } from "../alerts/send_sms";
-import { INewUser, ILogUser } from "../config/interface"
+import { INewUser, ILogUser, IDecodedToken } from "../config/interface"
 
 const authController = {
     registerDevelopment: async (req: Request, res: Response) => {
@@ -97,14 +97,27 @@ const authController = {
     },
     logout: async (req: Request, res: Response) => {
         try {
-
+            res.clearCookie("refresh_token", { path: "/api/v1/auth/refresh_token" })
+            return res.status(200).json({ message: "You have been logged out!" })
         } catch (err: any) {
             return res.status(500).json({ message: err.message })
         }
     },
     refresh_token: async (req: Request, res: Response) => {
         try {
+            //const access_token = generateAccessToken({ id: loggedUser._id })
+            const token = req.cookies.refresh_token
+            if (!token) return res.status(500).json({ message: "Please login again" })
+            const decoded = jwt.verify(token, process.env.JWT_REFRESH_KEY!)
+            if (!decoded) return res.status(500).json({ message: "Please login again" })
+            //console.log(decoded)
+            const { id } = decoded as IDecodedToken
+            const user = await User.findOne({ _id: id }).select("-password")
+            if (!user) return res.status(500).json({ message: "This account does not exist!" })
+            //console.log(user)
+            const access_token = generateAccessToken({ id: user._id })
 
+            res.status(200).json({ access_token })
         } catch (err: any) {
             return res.status(500).json({ message: err.message })
         }
@@ -113,14 +126,12 @@ const authController = {
 
 async function loginUser(loggedUser: ILogUser, password: string, res: Response) {
 
-    const isPasswordMatch = await bcrypt.compare(password, loggedUser.password);
+    const isPasswordMatch: boolean = await bcrypt.compare(password, loggedUser.password);
     //const hashedPassword = await bcrypt.hash(password, 10)
     //console.log(isPasswordMatch);
     if (!isPasswordMatch) {
         return res.status(500).json({ message: "Invalid credentials!" })
     }
-
-    const access_token = generateAccessToken({ id: loggedUser._id })
     const refreshToken = generateReFreshToken({ id: loggedUser._id })
 
     res.cookie("refresh_token", refreshToken, {

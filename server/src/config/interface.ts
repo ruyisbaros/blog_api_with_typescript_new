@@ -19,7 +19,7 @@ export interface INewUser {
 }
 
 export interface IDecodedToken {
-    newUser?: INewUser
+    id: string
     iat: number
     exp: number
 }
