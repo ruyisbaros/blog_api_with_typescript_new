@@ -8,12 +8,7 @@ import {
   userLoggedStart,
   userLoggedSuccess,
 } from "../../redux/currentUserSlicer";
-import {
-  InputChange,
-  FormSubmit,
-  ICurrentUser,
-  IUserLoginResponse,
-} from "../../utils/Interfaces";
+import { InputChange, FormSubmit, ICurrentUser } from "../../utils/Interfaces";
 
 const LoginPass = () => {
   const currentUser = useSelector<ICurrentUser>((store) => store.currentUser);
@@ -45,7 +40,7 @@ const LoginPass = () => {
         })
       );
     } catch (error: any) {
-      console.log(error);
+      dispatch(userLoggedFinish());
       toast.error(error.response.data.message || error.response.data[0]);
     }
   };
