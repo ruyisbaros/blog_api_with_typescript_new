@@ -11,6 +11,7 @@ import Header from "./components/global/Header";
 import Footer from "./components/global/Footer";
 import { ILoadingStatus } from "./utils/Interfaces";
 import Loading from "./components/alerts/Loading";
+import ActivateAccount from "./pages/ActivateAccount";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +33,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route
+            path="/activate_account/:token"
+            element={<ActivateAccount />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

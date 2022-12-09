@@ -80,6 +80,7 @@ const RegisterForm = () => {
           type="text"
           name="account"
           id="account"
+          placeholder="example@example.com or +495432715"
           className="form-control"
           value={regUser.account}
           onChange={handleRegisterInput}
@@ -94,6 +95,7 @@ const RegisterForm = () => {
             type={passType ? "text" : "password"}
             name="password"
             id="password"
+            placeholder="Password must be at least 6 chars"
             className="form-control"
             value={regUser.password}
             onChange={handleRegisterInput}

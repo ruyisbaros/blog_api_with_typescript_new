@@ -32,7 +32,7 @@ const authController = {
 
             const active_token = generateActiveToken(userObj)
 
-            const url = `${process.env.ROOT_URL}/api/v1/auth/activate_account/${active_token}`
+            const url = `${process.env.ROOT_URL}/activate_account/${active_token}`
 
             if (validateEmail(account)) {
                 sendMail(name, account, url, "Please verify your Email address!")
