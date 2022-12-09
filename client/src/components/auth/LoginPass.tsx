@@ -9,11 +9,14 @@ import {
   userLoggedSuccess,
 } from "../../redux/currentUserSlicer";
 import { InputChange, FormSubmit, ICurrentUser } from "../../utils/Interfaces";
+import loadingGif from "../../images/loading.gif";
 
 const LoginPass = () => {
   const currentUser = useSelector<ICurrentUser>((store) => store.currentUser);
   const userObj = currentUser as ICurrentUser;
   console.log(userObj);
+  console.log(userObj.logging);
+
   const dispatch = useDispatch();
   const [logUser, setLogUser] = useState({ account: "", password: "" });
   const [passType, setPassType] = useState(false);
@@ -80,10 +83,10 @@ const LoginPass = () => {
       </div>
       <button
         disabled={logUser.account && logUser.password ? false : true}
-        className="btn btn-dark w-100 mt-2"
+        className="btn btn-dark w-100 mt-2 login-btn"
         type="submit"
       >
-        Login
+        {userObj.logging ? <img src={loadingGif} alt="loading" /> : "Login"}
       </button>
     </form>
   );
