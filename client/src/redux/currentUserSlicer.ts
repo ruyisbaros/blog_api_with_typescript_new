@@ -28,7 +28,7 @@ const currentUserSlicer = createSlice({
       state.token = action.payload.token;
       state.currentUser = action.payload.currentUser;
     },
-    authLogout: (state, action) => {
+    authLogout: (state) => {
       state.logging = false;
       state.currentUser = "";
       state.token = "";

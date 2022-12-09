@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,6 +13,7 @@ import Footer from "./components/global/Footer";
 import { ILoadingStatus } from "./utils/Interfaces";
 import Loading from "./components/alerts/Loading";
 import ActivateAccount from "./pages/ActivateAccount";
+import { refreshToken, userLoggedFinish } from "./redux/currentUserSlicer";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,6 +22,30 @@ function App() {
   );
 
   //console.log(loadStatus);
+  useEffect(() => {
+    const refreshTokenFunc = async () => {
+      try {
+        const { data } = await axios.get("/api/v1/auth/refresh_token");
+        console.log(data);
+        dispatch(
+          refreshToken({
+            token: data.accessToken,
+            currentUser: data.current_user,
+          })
+        );
+      } catch (error: any) {
+        dispatch(userLoggedFinish());
+        alert(error.response.data.message);
+      }
+    };
+    if (localStorage.getItem("login")) {
+      refreshTokenFunc();
+
+      setTimeout(() => {
+        refreshTokenFunc();
+      }, 13 * 24 * 60 * 60 * 1000); //13 days
+    }
+  }, [dispatch]);
   return (
     <div className="mother_container">
       <BrowserRouter>

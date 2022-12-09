@@ -1,0 +1,7 @@
+.current_user_avatar{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    transform: translateY(-3px);
+}

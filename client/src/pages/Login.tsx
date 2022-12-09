@@ -1,10 +1,24 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import LoginPass from "../components/auth/LoginPass";
 import LoginSMS from "../components/auth/LoginSMS";
+import { ICurrentUser } from "../utils/Interfaces";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const currentUser = useSelector<ICurrentUser>((store) => store.currentUser);
+  const userObj = currentUser as ICurrentUser;
+  console.log(userObj);
+  console.log(userObj.logging);
   const [sms, setSms] = useState(false);
+
+  useEffect(() => {
+    if (userObj.token) {
+      navigate("/");
+    }
+  }, [userObj.token]);
+
   return (
     <div className="auth_login">
       <div className="auth_box">

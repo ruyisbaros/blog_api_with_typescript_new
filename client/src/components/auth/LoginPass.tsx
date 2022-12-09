@@ -42,6 +42,7 @@ const LoginPass = () => {
           token: res.data.access_token,
         })
       );
+      localStorage.setItem("login", "true");
     } catch (error: any) {
       dispatch(userLoggedFinish());
       toast.error(error.response.data.message || error.response.data[0]);

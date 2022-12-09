@@ -13,7 +13,7 @@ export interface IUser {
 }
 //For redux:currentUser slicer
 export interface ICurrentUser {
-    currentUser: object,
+    currentUser: IUser,
     message: string
     token: string,
     logging: boolean,

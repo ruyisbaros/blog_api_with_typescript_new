@@ -10,8 +10,10 @@ import {
   userLoggedStart,
   userLoggedSuccess,
 } from "../../redux/currentUserSlicer";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
   const currentUser = useSelector<ICurrentUser>((store) => store.currentUser);
   const userObj = currentUser as ICurrentUser;
   console.log(userObj);
@@ -48,6 +50,10 @@ const RegisterForm = () => {
             message: res.data.message,
           })
         );
+        localStorage.setItem("login", "true");
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       } catch (error: any) {
         dispatch(userLoggedFinish());
         toast.error(error.response.data.message || error.response.data[0]);
