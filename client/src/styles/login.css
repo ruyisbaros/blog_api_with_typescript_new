@@ -29,3 +29,8 @@
     color: white;
     max-width: 20px;
 }
+
+.signInButton{
+    display: flex;
+    justify-content: center;
+}

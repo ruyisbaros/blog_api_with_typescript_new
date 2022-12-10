@@ -4,13 +4,14 @@ import { useSelector } from "react-redux";
 import LoginPass from "../components/auth/LoginPass";
 import LoginSMS from "../components/auth/LoginSMS";
 import { ICurrentUser } from "../utils/Interfaces";
+import GoogleLogin from "../components/auth/GoogleLogin";
 
 const Login = () => {
   const navigate = useNavigate();
   const currentUser = useSelector<ICurrentUser>((store) => store.currentUser);
   const userObj = currentUser as ICurrentUser;
   console.log(userObj);
-  console.log(userObj.logging);
+
   const [sms, setSms] = useState(false);
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const Login = () => {
     <div className="auth_login">
       <div className="auth_box">
         <h3 className="text-center mb-4 text-uppercase">Login</h3>
+
         {sms ? <LoginSMS /> : <LoginPass />}
 
         <small className="row my-2 text-primary" style={{ cursor: "pointer" }}>
@@ -45,6 +47,8 @@ const Login = () => {
             Register Now!
           </Link>
         </p>
+        <h6 className="text-center">OR</h6>
+        <GoogleLogin />
       </div>
     </div>
   );

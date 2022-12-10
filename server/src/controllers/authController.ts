@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 import User from "../models/userModel"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import sendMail from "../alerts/send_email"
 import { generateAccessToken, generateActiveToken, generateReFreshToken } from "../config/token_generator"
 import { validateEmail, validatePhoneNumber } from "../middlewares/validator";
-import { sendSMS } from "../alerts/send_sms";
+import { sendSMS, sendOTP, verifyOTP } from "../alerts/send_sms";
 import { INewUser, ILogUser, IDecodedToken } from "../config/interface"
 
 const authController = {
@@ -122,6 +122,47 @@ const authController = {
             return res.status(500).json({ message: err.message })
         }
     },
+    loginWithSms: async (req: Request, res: Response) => {
+        try {
+            const { phone } = req.body
+            //console.log(phone);
+            const data = await sendOTP(phone, "sms")
+            //console.log(data);
+            return res.status(200).json(data)
+        } catch (err: any) {
+            return res.status(500).json({ message: err.message })
+        }
+    },
+    verifySMS: async (req: Request, res: Response) => {
+        try {
+            const { phone, code } = req.body
+            const data = await verifyOTP(phone, code)
+            if (!data?.valid) return res.status(500).json({ message: "Invalid or expired code! Please try again" })
+            const user = await User.findOne({ account: phone })
+            const password = phone + "your phone number"
+            const hashedPassword = await bcrypt.hash(password, 10)
+            if (user) {
+                const refreshToken = generateReFreshToken({ id: user._id })
+                const access_token = generateAccessToken({ id: user._id })
+                res.cookie("refresh_token", refreshToken, {
+                    httpOnly: true,
+                    path: "/api/v1/auth/refresh_token",
+                    maxAge: 15 * 24 * 60 * 60 * 1000 //15 days
+                })
+
+                res.status(200).json({
+                    message: "Login Success",
+                    user: { ...user._doc, password: "" },
+                    access_token
+                })
+            } else {
+                return res.status(500).json({ message: "Your Code is correct but most probably you didn't create your account with this number" })
+            }
+
+        } catch (err: any) {
+            return res.status(500).json({ message: err.message })
+        }
+    }
 }
 
 async function loginUser(loggedUser: ILogUser, password: string, res: Response) {

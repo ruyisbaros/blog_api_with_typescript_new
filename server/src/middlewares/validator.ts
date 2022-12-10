@@ -46,7 +46,23 @@ export const validateLogin = async (req: Request, res: Response, next: NextFunct
         errors.push("Password field must be min 4 chars!")
     }
 
-    
+
+    if (errors.length > 0) {
+        return res.status(400).json(errors)
+    } else {
+
+        next()
+    }
+}
+export const validateSmsLogin = async (req: Request, res: Response, next: NextFunction) => {
+    const { phone } = req.body
+    const errors = []
+    if (!phone) {
+        errors.push("Please enter your phone number!")
+    } else if (!validatePhoneNumber(phone)) {
+        errors.push("Invalid phone number!")
+    }
+
     if (errors.length > 0) {
         return res.status(400).json(errors)
     } else {
