@@ -10,17 +10,21 @@ import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
 import Header from "./components/global/Header";
 import Footer from "./components/global/Footer";
-import { ILoadingStatus } from "./utils/Interfaces";
+import { ICurrentUser, ILoadingStatus } from "./utils/Interfaces";
 import Loading from "./components/alerts/Loading";
 import ActivateAccount from "./pages/ActivateAccount";
 import { refreshToken, userLoggedFinish } from "./redux/currentUserSlicer";
+import Profile from "./pages/Profile";
 
 function App() {
   const dispatch = useDispatch();
   const loadStatus = useSelector<ILoadingStatus>(
     (store) => store.loadStatus.loading
   );
-
+  /*  const currentUser = useSelector<ICurrentUser>((store) => store.currentUser);
+  const userObj = currentUser as ICurrentUser;
+  console.log(userObj);
+  console.log(userObj.logging); */
   //console.log(loadStatus);
   useEffect(() => {
     const refreshTokenFunc = async () => {
@@ -59,6 +63,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profile/:id" element={<Profile />} />
           <Route
             path="/activate_account/:token"
             element={<ActivateAccount />}

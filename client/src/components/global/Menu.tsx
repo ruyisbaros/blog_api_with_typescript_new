@@ -66,12 +66,18 @@ const Menu = () => {
             aria-labelledby="navbarSupportedContent"
           >
             <li>
-              <Link className="dropdown-item" to="/profile">
+              <Link
+                className="dropdown-item"
+                to={`/profile/${userObj.currentUser._id}`}
+              >
                 Your Profile
               </Link>
             </li>
             <li>
-              <Link className="dropdown-item" to="/edit_profile">
+              <Link
+                className="dropdown-item"
+                to={`/profile/${userObj.currentUser._id}`}
+              >
                 Edit Profile
               </Link>
             </li>
