@@ -139,8 +139,7 @@ const authController = {
             const data = await verifyOTP(phone, code)
             if (!data?.valid) return res.status(500).json({ message: "Invalid or expired code! Please try again" })
             const user = await User.findOne({ account: phone })
-            const password = phone + "your phone number"
-            const hashedPassword = await bcrypt.hash(password, 10)
+
             if (user) {
                 const refreshToken = generateReFreshToken({ id: user._id })
                 const access_token = generateAccessToken({ id: user._id })

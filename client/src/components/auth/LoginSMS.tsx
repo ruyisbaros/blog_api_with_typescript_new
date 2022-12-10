@@ -22,7 +22,7 @@ const LoginSMS = () => {
     try {
       dispatch(userLoggedStart());
       const res = await axios.post("/api/v1/auth/sms_verify", { phone, code });
-      console.log(res.data);
+      //console.log(res.data);
       if (res.data.valid) {
         dispatch(
           userLoggedSuccess({
