@@ -31,11 +31,15 @@ const Menu = () => {
     await axios.get("/api/v1/auth/logout");
     dispatch(authLogout());
     localStorage.removeItem("login");
+    window.location.href = "/";
   };
   return (
-    <ul className="navbar-nav ms-auto">
+    <ul className="navbar-nav ms-auto header_links">
       {activeLinks.map((link, index) => (
-        <li key={index} className={`nav-item ${isActive(link.path)}`}>
+        <li
+          key={index}
+          className={`nav-item header_links_item ${isActive(link.path)}`}
+        >
           <Link to={link.path} className="nav-link">
             {link.label}
           </Link>

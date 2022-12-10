@@ -5,3 +5,9 @@
     object-fit: cover;
     transform: translateY(-3px);
 }
+
+.header_links .header_links_item.active{
+    border-bottom: 1px solid #000;
+    font-weight: 500;
+    
+}

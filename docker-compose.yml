@@ -2,11 +2,14 @@ version: '3'
 services:
   #service-1 
   backend:
-    build: .
+    build: 
+      context: ./server
+      dockerfile: Dockerfile.node
   #service-2    
   frontend:
     build:
       context: ./client
+      dockerfile: Dockerfile.react
   #service-3  
   nginx:
     image: nginx
