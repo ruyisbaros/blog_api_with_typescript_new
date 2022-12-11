@@ -1,0 +1,47 @@
+.profile_info {
+    background: #fff;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 2.5rem 1.7rem;
+}
+
+.profile_info .info_avatar {
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.profile_info .info_avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile_info .info_avatar span {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    text-align: center;
+    color: crimson;
+    transition:all 0.4s ease;
+    background: #fff5;
+}
+.profile_info .info_avatar span label{
+    display: block;
+    cursor: pointer;
+}
+.profile_info .info_avatar span input{
+    display: none;
+}
+.profile_info .info_avatar:hover span{
+    bottom: 0;
+}

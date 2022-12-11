@@ -14,10 +14,10 @@
     padding: 2.7rem 1.7rem;
 }
 
-.auth_login .pass{
+ .pass{
     position: relative;
 }
-.auth_login .pass small{
+ .pass small{
     position: absolute;
     top: 20%;
     right: 5px;
