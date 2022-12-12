@@ -8,11 +8,11 @@ const categoryCtrl = {
         //console.log(req.user)
         if (req.user.role !== "Admin") return res.status(403).json({ message: "Invalid user authentication!" })
         try {
-            const { name, image } = req.body;
+            const { name } = req.body;
             const category = await Category.findOne({ name })
             if (category) return res.status(400).json({ message: "Category with name: " + category.name + " already exists" })
 
-            const newCategory = await Category.create({ name: name.toLowerCase(), image })
+            const newCategory = await Category.create({ name: name.toLowerCase() })
             return res.status(201).json(newCategory)
         } catch (err: any) {
             let errMessage;
@@ -47,10 +47,10 @@ const categoryCtrl = {
         //console.log(req.user)
         if (req.user.role !== "Admin") return res.status(403).json({ message: "Invalid user authentication!" })
         try {
-            const { name, image } = req.body;
+            const { name } = req.body;
             const category = await Category.findById(req.params.id)
             if (!category) return res.status(404).json({ message: "Category not found" })
-            const updatedCategory = await Category.findByIdAndUpdate(req.params.id, { name: name.toLowerCase(), image }, { new: true });
+            const updatedCategory = await Category.findByIdAndUpdate(req.params.id, { name: name.toLowerCase() }, { new: true });
             res.status(201).json({ updatedCategory, message: "Category updated successfully" })
         } catch (error: any) {
             res.status(500).json({ message: error.message })

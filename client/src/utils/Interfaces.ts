@@ -24,9 +24,8 @@ export interface ILoadingStatus {
         loading: boolean,
     }
 }
-export interface IUserLoginInput {
-    account: string
-    password: string
+export interface ICategories {
+    categories: any[]
 }
 export interface IImageFile {
     file?: File

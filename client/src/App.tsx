@@ -15,17 +15,19 @@ import Loading from "./components/alerts/Loading";
 import ActivateAccount from "./pages/ActivateAccount";
 import { refreshToken, userLoggedFinish } from "./redux/currentUserSlicer";
 import Profile from "./pages/Profile";
+import Category from "./pages/Category";
 
 function App() {
   const dispatch = useDispatch();
   const loadStatus = useSelector<ILoadingStatus>(
     (store) => store.loadStatus.loading
   );
-  /*  const currentUser = useSelector<ICurrentUser>((store) => store.currentUser);
+  const currentUser = useSelector<ICurrentUser>((store) => store.currentUser);
   const userObj = currentUser as ICurrentUser;
   console.log(userObj);
-  console.log(userObj.logging); */
+  //console.log(userObj.logging);
   //console.log(loadStatus);
+  const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     const refreshTokenFunc = async () => {
       try {
@@ -50,6 +52,13 @@ function App() {
       }, 13 * 24 * 60 * 60 * 1000); //13 days
     }
   }, [dispatch]);
+  useEffect(() => {
+    if (userObj.currentUser) {
+      if (userObj.currentUser.role === "Admin") {
+        setIsAdmin(true);
+      }
+    }
+  }, [userObj.currentUser]);
   return (
     <div className="mother_container">
       <BrowserRouter>
@@ -64,6 +73,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route
+            path="/category"
+            element={isAdmin ? <Category /> : <NotFound />}
+          />
           <Route
             path="/activate_account/:token"
             element={<ActivateAccount />}

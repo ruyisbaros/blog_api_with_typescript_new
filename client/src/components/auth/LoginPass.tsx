@@ -14,8 +14,8 @@ import loadingGif from "../../images/loading.gif";
 const LoginPass = () => {
   const currentUser = useSelector<ICurrentUser>((store) => store.currentUser);
   const userObj = currentUser as ICurrentUser;
-  console.log(userObj);
-  console.log(userObj.logging);
+  /* console.log(userObj);
+  console.log(userObj.logging); */
 
   const dispatch = useDispatch();
   const [logUser, setLogUser] = useState({ account: "", password: "" });

@@ -8,10 +8,10 @@ const categorySchema = new mongoose.Schema({
         trim: true,
         unique: true,
     },
-    image: {
+    /* image: {
         type: String,
         default: "https://res.cloudinary.com/ruyisbaros/image/upload/v1666022159/frnuturkacwbwlwh00bs.jpg"
-    },
+    }, */
 }, { timestamps: true });
 
 const Category = mongoose.model('Category', categorySchema);

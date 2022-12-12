@@ -46,6 +46,14 @@ const Menu = () => {
         </li>
       ))}
 
+      {userObj.currentUser.role === "Admin" && (
+        <li className={`nav-item header_links_item ${isActive("/category")}`}>
+          <Link to="/category" className="nav-link">
+            Category
+          </Link>
+        </li>
+      )}
+
       {userObj.currentUser && (
         <li className="nav-item dropdown mx-1">
           <span
