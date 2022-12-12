@@ -29,3 +29,4 @@ export const protect = async (req: IReqAuth, res: Response, next: NextFunction) 
         res.status(500).json({ error: error.message });
     }
 }
+

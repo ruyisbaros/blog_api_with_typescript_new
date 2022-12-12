@@ -26,6 +26,7 @@ import "./config/db_set"
 //Routes Middleware
 app.use("/api/v1/auth", routes.authRouter)
 app.use("/api/v1/users", routes.userRouter)
+app.use("/api/v1/categories", routes.categoryRouter)
 
 //Server configuration
 const port = process.env.PORT || 3002
