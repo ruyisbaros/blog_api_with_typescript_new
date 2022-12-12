@@ -6,19 +6,16 @@ import NotFound from "../../pages/NotFound";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { loadingFinish, loadingStart } from "../../redux/loadSlicer";
-import { checkImage, uploadImage } from "../../utils/ImageUpload";
-import { updateCurrentUser } from "../../redux/currentUserSlicer";
 
 const UserInfo = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector<ICurrentUser>((store) => store.currentUser);
   const userObj = currentUser as ICurrentUser;
-  console.log(userObj);
   const [passType, setPassType] = useState(false);
   const [confPassType, setConfPassType] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userProfile, setUserProfile] = useState({
-    name: userObj.currentUser.name,
+    name: "",
     account: userObj.currentUser.account,
     avatar: "" as any,
     password: "",
@@ -49,38 +46,13 @@ const UserInfo = () => {
   const handleSubmit = async (e: FormSubmit) => {
     e.preventDefault();
     if (avatar || name) {
-      //console.log(avatar, name);
-      let url = userObj.currentUser.avatar;
-      if (avatar) {
-        const check = checkImage(avatar);
-        if (check) return toast.error(check);
-        dispatch(loadingStart());
-        const photo = await uploadImage(avatar);
-        //console.log(photo);
-        url = photo.url;
-        dispatch(loadingFinish());
-      }
+      console.log(avatar, name);
       try {
         dispatch(loadingStart());
-        const res = await axios.patch(
-          `/api/v1/users/update_user`,
-          {
-            name,
-            avatar: url,
-          },
-          {
-            headers: {
-              Authorization: userObj.token,
-            },
-          }
-        );
-        dispatch(
-          updateCurrentUser({
-            token: userObj.token,
-            currentUser: res.data,
-          })
-        );
-        console.log(res);
+        /*const res = await axios.patch(
+              `/api/v1/users/update_one/${userObj.currentUser._id}`,
+              { name,avatar }
+            );*/
         dispatch(loadingFinish());
       } catch (error: any) {
         dispatch(loadingFinish());

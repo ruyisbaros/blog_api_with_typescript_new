@@ -24,6 +24,10 @@ const currentUserSlicer = createSlice({
       state.message = action.payload.message;
       state.token = action.payload.token;
     },
+    updateCurrentUser: (state, action) => {
+      state.token = action.payload.token;
+      state.currentUser = action.payload.currentUser;
+    },
     refreshToken: (state, action) => {
       state.token = action.payload.token;
       state.currentUser = action.payload.currentUser;
@@ -42,6 +46,7 @@ export const {
   userLoggedSuccess,
   refreshToken,
   authLogout,
+  updateCurrentUser
 } = currentUserSlicer.actions;
 
 export default currentUserSlicer.reducer;

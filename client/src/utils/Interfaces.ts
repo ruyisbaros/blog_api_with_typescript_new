@@ -28,6 +28,9 @@ export interface IUserLoginInput {
     account: string
     password: string
 }
+export interface IImageFile {
+    file?: File
+}
 export interface IUserRegisterInput {
     name: string
     account: string
