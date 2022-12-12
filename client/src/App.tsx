@@ -16,6 +16,7 @@ import ActivateAccount from "./pages/ActivateAccount";
 import { refreshToken, userLoggedFinish } from "./redux/currentUserSlicer";
 import Profile from "./pages/Profile";
 import Category from "./pages/Category";
+import { fetchCategories } from "./redux/categorySlicer";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ function App() {
     const refreshTokenFunc = async () => {
       try {
         const { data } = await axios.get("/api/v1/auth/refresh_token");
-        console.log(data);
+        //console.log(data);
         dispatch(
           refreshToken({
             token: data.accessToken,
@@ -52,6 +53,7 @@ function App() {
       }, 13 * 24 * 60 * 60 * 1000); //13 days
     }
   }, [dispatch]);
+
   useEffect(() => {
     if (userObj.currentUser) {
       if (userObj.currentUser.role === "Admin") {
@@ -59,6 +61,15 @@ function App() {
       }
     }
   }, [userObj.currentUser]);
+
+  useEffect(() => {
+    const fetchAllCategories = async () => {
+      const res = await axios.get("/api/v1/categories/get_all");
+      dispatch(fetchCategories(res.data));
+    };
+    fetchAllCategories();
+  }, [dispatch]);
+
   return (
     <div className="mother_container">
       <BrowserRouter>

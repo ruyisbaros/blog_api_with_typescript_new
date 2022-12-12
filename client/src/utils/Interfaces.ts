@@ -27,6 +27,12 @@ export interface ILoadingStatus {
 export interface ICategories {
     categories: any[]
 }
+export interface ICategory {
+    _id: string
+    name: string
+    createdAt: string
+    updatedAt: string
+}
 export interface IImageFile {
     file?: File
 }

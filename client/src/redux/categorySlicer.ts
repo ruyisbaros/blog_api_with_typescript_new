@@ -22,7 +22,7 @@ const categorySlicer = createSlice({
         },
         updateCategory: (state, action) => {
             state.categories = state.categories.map(
-                (crt: any) => crt._id === action.payload.id ? crt = action.payload.category : crt
+                (crt: any) => crt._id === action.payload.id ? action.payload.category : crt
             );
         },
 
