@@ -15,7 +15,7 @@ const UserInfo = () => {
   const userObj = currentUser as ICurrentUser;
   console.log(userObj);
   const [passType, setPassType] = useState(false);
-  const [confPassType, setConfPassType] = useState(false);
+
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userProfile, setUserProfile] = useState({
     name: userObj.currentUser.name,
@@ -77,9 +77,10 @@ const UserInfo = () => {
         dispatch(
           updateCurrentUser({
             token: userObj.token,
-            currentUser: res.data,
+            currentUser: res.data.user,
           })
         );
+        toast.success(res.data.message);
         console.log(res);
         dispatch(loadingFinish());
       } catch (error: any) {
@@ -88,57 +89,107 @@ const UserInfo = () => {
       }
     }
   };
+
+  //PWD RESET
+  const [currentPassType, setCurrentPassType] = useState(false);
+  const [newpassType, setNewPassType] = useState(false);
+  const [confPassType, setConfPassType] = useState(false);
+
+  const [pwdCredentials, setPwdCredentials] = useState({
+    current_password: "",
+    new_password: "",
+    conf_password: "",
+  });
+  const { current_password, new_password, conf_password } = pwdCredentials;
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPwdCredentials({ ...pwdCredentials, [name]: value });
+  };
+
+  const updatePassword = async (e: FormSubmit) => {
+    e.preventDefault();
+    if (new_password === conf_password) {
+      try {
+        dispatch(loadingStart());
+        const { data } = await axios.patch(
+          `/api/v1/users/update_pwd`,
+          { current_password, new_password },
+          {
+            headers: {
+              Authorization: userObj.token,
+            },
+          }
+        );
+        dispatch(loadingFinish());
+        setPwdCredentials({
+          ...pwdCredentials,
+          current_password: "",
+          new_password: "",
+          conf_password: "",
+        });
+        toast.success(data.message);
+      } catch (error: any) {
+        dispatch(loadingFinish());
+        toast.error(error.response.data.message);
+      }
+    } else {
+      toast.error("Passwords do not match!");
+    }
+  };
+
   if (!userObj.currentUser) return <NotFound />;
   return (
-    <form className="profile_info" onSubmit={handleSubmit}>
-      <div className="info_avatar">
-        <img
-          src={
-            avatar ? URL.createObjectURL(avatar) : userObj.currentUser.avatar
-          }
-          alt="avatar"
-        />
-        <span>
-          <i className="fas fa-camera"></i>
-          <label htmlFor="file_up">Change</label>
-          <input
-            type="file"
-            accept="image/*"
-            name="file"
-            id="file_up"
-            onChange={handleChangeAvatar}
+    <>
+      <form className="profile_info" onSubmit={handleSubmit}>
+        <div className="info_avatar">
+          <img
+            src={
+              avatar ? URL.createObjectURL(avatar) : userObj.currentUser.avatar
+            }
+            alt="avatar"
           />
-        </span>
-      </div>
-      <div className="form-group my-3">
-        <label htmlFor="account" className="form-label">
-          Account
-        </label>
-        <input
-          type="text"
-          name="account"
-          id="account"
-          disabled={true}
-          className="form-control"
-          defaultValue={userObj.currentUser.account}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-group mb-3">
-        <label htmlFor="name" className="form-label">
-          Name
-        </label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          className="form-control"
-          defaultValue={userObj.currentUser.name}
-          onChange={handleChange}
-        />
-      </div>
+          <span>
+            <i className="fas fa-camera"></i>
+            <label htmlFor="file_up">Change</label>
+            <input
+              type="file"
+              accept="image/*"
+              name="file"
+              id="file_up"
+              onChange={handleChangeAvatar}
+            />
+          </span>
+        </div>
+        <div className="form-group my-3">
+          <label htmlFor="account" className="form-label">
+            Account
+          </label>
+          <input
+            type="text"
+            name="account"
+            id="account"
+            disabled={true}
+            className="form-control"
+            defaultValue={userObj.currentUser.account}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <label htmlFor="name" className="form-label">
+            Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            className="form-control"
+            defaultValue={userObj.currentUser.name}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div className="form-group mb-3">
+        {/* <div className="form-group mb-3">
         <label htmlFor="password" className="form-label">
           Password
         </label>
@@ -173,11 +224,78 @@ const UserInfo = () => {
             {confPassType ? <BiShow size={18} /> : <BiHide size={18} />}
           </small>
         </div>
-      </div>
-      <button type="submit" className="btn btn-dark w-100">
-        Update
-      </button>
-    </form>
+      </div> */}
+        <button type="submit" className="btn btn-dark w-100">
+          Update Profile
+        </button>
+        {/* RESET PWD */}
+      </form>
+      <form className="reset_pwd" onSubmit={updatePassword}>
+        <h4 className="text-center my-4">Reset Password</h4>
+        <div className="current_p">
+          <label className="form-label" htmlFor="current_password">
+            Current Password
+          </label>
+          <input
+            className="form-control"
+            name="current_password"
+            id="current_password"
+            type={currentPassType ? "text" : "password"}
+            placeholder="Enter your current password"
+            value={current_password}
+            onChange={handleInput}
+          />
+          <small onClick={() => setCurrentPassType(!currentPassType)}>
+            {currentPassType ? <BiShow size={20} /> : <BiHide size={20} />}
+          </small>
+        </div>
+
+        <div className="updadet_p">
+          <label
+            className="new_password_label form-label"
+            htmlFor="new_password"
+          >
+            New Password
+          </label>
+          <input
+            className="form-control"
+            name="new_password"
+            id="new_password"
+            type={newpassType ? "text" : "password"}
+            placeholder="Enter a password"
+            value={new_password}
+            onChange={handleInput}
+          />
+          <small
+            className="small_new"
+            onClick={() => setNewPassType(!newpassType)}
+          >
+            {newpassType ? <BiShow size={20} /> : <BiHide size={20} />}
+          </small>
+          <label className="form-label" htmlFor="conf_password">
+            Confirm New Password
+          </label>
+          <input
+            className="form-control"
+            name="conf_password"
+            id="conf_password"
+            type={confPassType ? "text" : "password"}
+            placeholder="Enter the password again"
+            value={conf_password}
+            onChange={handleInput}
+          />
+          <small
+            className="small_conf"
+            onClick={() => setConfPassType(!confPassType)}
+          >
+            {confPassType ? <BiShow size={20} /> : <BiHide size={20} />}
+          </small>
+          <button type="submit" className="btn btn-dark w-100">
+            Update Password
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 

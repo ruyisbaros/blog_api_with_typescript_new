@@ -45,3 +45,46 @@
 .profile_info .info_avatar:hover span{
     bottom: 0;
 }
+
+.current_p {
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #eee;
+    /* background: #ccc; */
+    position: relative;
+  }
+  .current_p > small {
+    position: absolute;
+    right: 10px;
+    top: 2.5rem;
+    cursor: pointer;
+  }
+  .updadet_p {
+    /* background: #eee; */
+    position: relative;
+  }
+  .updadet_p .small_new,
+  .updadet_p .small_conf {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 3.5rem;
+  }
+  .updadet_p .small_conf {
+    top: 9rem;
+  }
+  
+  .current_p input,
+  .updadet_p input {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .new_password_label {
+    margin-top: 1rem;
+  }
+  .updadet_p .update_password {
+    padding: 3px 10px;
+    font-weight: bold;
+    color: #333;
+    border-radius: 3px;
+  }
