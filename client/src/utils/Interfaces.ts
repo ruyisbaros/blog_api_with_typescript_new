@@ -28,7 +28,7 @@ export interface ICategories {
     categories: any[]
 }
 export interface ICategory {
-    _id: string
+    _id?: string
     name: string
     createdAt: string
     updatedAt: string
