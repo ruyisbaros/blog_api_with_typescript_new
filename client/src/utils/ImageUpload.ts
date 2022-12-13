@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const checkImage = (file: File) => {
+
   let err = ""
   if (!file) return err = "File not found"
   if (file.size > 1024 * 1024 * 1) return err = "Your file is too large (max 1mb allowed)"

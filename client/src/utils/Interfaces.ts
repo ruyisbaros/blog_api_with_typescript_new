@@ -33,6 +33,16 @@ export interface ICategory {
     createdAt: string
     updatedAt: string
 }
+export interface IBlog {
+    _id?: string
+    user: string | IUser,
+    title: string,
+    description: string,
+    content: string,
+    category: string,
+    thumbnail: string | File,
+    createdAt: string,
+}
 export interface IImageFile {
     file?: File
 }
@@ -47,5 +57,9 @@ export interface IUserRegisterResponse {
     password: string
 }
 
-export type InputChange = ChangeEvent<HTMLInputElement>;
+export type InputChange = ChangeEvent<
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | HTMLSelectElement
+>;
 export type FormSubmit = FormEvent<HTMLFormElement>;

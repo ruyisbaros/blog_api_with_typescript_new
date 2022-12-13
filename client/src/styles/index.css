@@ -19,9 +19,9 @@ code {
   color:inherit
 }
 
-.text_area {
+textarea {
   resize: none;
-  height: 150px;
+  height: 90px;
   width: 100%;
   padding: 10px;
 }

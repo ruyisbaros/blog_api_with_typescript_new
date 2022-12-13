@@ -17,6 +17,7 @@ import { refreshToken, userLoggedFinish } from "./redux/currentUserSlicer";
 import Profile from "./pages/Profile";
 import Category from "./pages/Category";
 import { fetchCategories } from "./redux/categorySlicer";
+import CreateBlog from "./pages/CreateBlog";
 
 function App() {
   const dispatch = useDispatch();
@@ -84,6 +85,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/create_blog" element={<CreateBlog />} />
           <Route
             path="/category"
             element={isAdmin ? <Category /> : <NotFound />}

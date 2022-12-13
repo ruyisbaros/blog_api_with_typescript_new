@@ -22,7 +22,7 @@ const blogSlicer = createSlice({
         },
         updateBlog: (state, action) => {
             state.blogs = state.blogs.map(
-                (crt: any) => crt._id === action.payload.id ? crt = action.payload.category : crt
+                (blog: any) => blog._id === action.payload.id ? action.payload.blog : blog
             );
         },
 

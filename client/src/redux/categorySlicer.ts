@@ -17,12 +17,12 @@ const categorySlicer = createSlice({
         },
         removeFromCategories: (state, action) => {
             state.categories = state.categories.filter(
-                (crt: any) => crt._id !== action.payload
+                (ctg: any) => ctg._id !== action.payload
             );
         },
         updateCategory: (state, action) => {
             state.categories = state.categories.map(
-                (crt: any) => crt._id === action.payload.id ? action.payload.category : crt
+                (ctg: any) => ctg._id === action.payload.id ? action.payload.category : ctg
             );
         },
 
