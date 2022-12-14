@@ -27,6 +27,9 @@ export interface ILoadingStatus {
 export interface ICategories {
     categories: any[]
 }
+export interface IBlogs {
+    blogs: any[]
+}
 export interface ICategory {
     _id?: string
     name: string
@@ -35,7 +38,7 @@ export interface ICategory {
 }
 export interface IBlog {
     _id?: string
-    user: string | IUser,
+    user?: string | IUser,
     title: string,
     description: string,
     content: string,

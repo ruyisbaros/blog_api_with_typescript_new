@@ -18,6 +18,7 @@ import Profile from "./pages/Profile";
 import Category from "./pages/Category";
 import { fetchCategories } from "./redux/categorySlicer";
 import CreateBlog from "./pages/CreateBlog";
+import { fetchBlogs } from "./redux/blogSlicer";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,6 +70,14 @@ function App() {
       dispatch(fetchCategories(res.data));
     };
     fetchAllCategories();
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchAllBlogs = async () => {
+      const res = await axios.get("/api/v1/blogs/home/get_all");
+      dispatch(fetchBlogs(res.data));
+    };
+    fetchAllBlogs();
   }, [dispatch]);
 
   return (

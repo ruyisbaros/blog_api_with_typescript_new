@@ -19,7 +19,6 @@ const CreateBlog = () => {
   );
   const { currentUser, token } = currentUserBox as ICurrentUser;
   const [blog, setBlog] = useState<IBlog>({
-    user: currentUser._id,
     title: "",
     description: "",
     content: "",
@@ -35,7 +34,7 @@ const CreateBlog = () => {
   useEffect(() => {
     const div = bodyRef.current;
     const content = div?.innerText as string;
-    setBlog({ ...blog, content });
+    //setBlog({ ...blog, content });
     setText(content);
   }, [body]);
 
@@ -46,20 +45,20 @@ const CreateBlog = () => {
       ...blog,
     });
     if (check) return toast.error(check);
-    try {
-      dispatch(loadingStart());
-      if (typeof blog.thumbnail !== "string") {
-        const photo = await uploadImage(blog.thumbnail);
-        url = photo.url;
-      } else {
-        url = blog.thumbnail;
-      }
-      //console.log(url);
-      setBlog({ ...blog, thumbnail: url });
 
+    dispatch(loadingStart());
+    if (typeof blog.thumbnail !== "string") {
+      const photo = await uploadImage(blog.thumbnail);
+      url = photo.url;
+    } else {
+      url = blog.thumbnail;
+    }
+    //console.log(url);
+    //setBlog({ ...blog, thumbnail: url });
+    try {
       const res = await axios.post(
         "/api/v1/blogs/create",
-        { ...blog },
+        { ...blog, thumbnail: url, content: body },
         {
           headers: { Authorization: token },
         }
