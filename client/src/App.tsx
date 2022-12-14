@@ -10,7 +10,7 @@ import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
 import Header from "./components/global/Header";
 import Footer from "./components/global/Footer";
-import { ICurrentUser, ILoadingStatus } from "./utils/Interfaces";
+import { IBlogs, ICurrentUser, ILoadingStatus } from "./utils/Interfaces";
 import Loading from "./components/alerts/Loading";
 import ActivateAccount from "./pages/ActivateAccount";
 import { refreshToken, userLoggedFinish } from "./redux/currentUserSlicer";
@@ -22,6 +22,8 @@ import { fetchBlogs } from "./redux/blogSlicer";
 
 function App() {
   const dispatch = useDispatch();
+  const blogs = useSelector<IBlogs>((store) => store.blogs);
+  console.log(blogs);
   const loadStatus = useSelector<ILoadingStatus>(
     (store) => store.loadStatus.loading
   );
@@ -73,11 +75,11 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    const fetchAllBlogs = async () => {
+    const fetchAllHomeBlogs = async () => {
       const res = await axios.get("/api/v1/blogs/home/get_all");
       dispatch(fetchBlogs(res.data));
     };
-    fetchAllBlogs();
+    fetchAllHomeBlogs();
   }, [dispatch]);
 
   return (

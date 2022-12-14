@@ -1,3 +1,4 @@
+
 import { ChangeEvent, FormEvent } from "react";
 
 export interface IUser {
@@ -28,7 +29,7 @@ export interface ICategories {
     categories: any[]
 }
 export interface IBlogs {
-    blogs: any[]
+    blogs: HomeBlog[]
 }
 export interface ICategory {
     _id?: string
@@ -36,20 +37,30 @@ export interface ICategory {
     createdAt: string
     updatedAt: string
 }
+export interface HomeBlog {
+    _id?: string
+    user?: IUser,
+    title: string,
+    description: string,
+    content: string,
+    category: ICategory
+    thumbnail: string | File,
+    createdAt: string,
+}
 export interface IBlog {
     _id?: string
     user?: string | IUser,
     title: string,
     description: string,
     content: string,
-    category: string,
+    category: string
     thumbnail: string | File,
     createdAt: string,
 }
-export interface IImageFile {
+/* export interface IImageFile {
     file?: File
-}
-export interface IUserRegisterInput {
+} */
+/* export interface IUserRegisterInput {
     name: string
     account: string
     password: string
@@ -58,7 +69,7 @@ export interface IUserRegisterResponse {
     name: string
     account: string
     password: string
-}
+} */
 
 export type InputChange = ChangeEvent<
     | HTMLInputElement
