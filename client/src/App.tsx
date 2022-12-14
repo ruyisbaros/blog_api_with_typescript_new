@@ -19,6 +19,7 @@ import Category from "./pages/Category";
 import { fetchCategories } from "./redux/categorySlicer";
 import CreateBlog from "./pages/CreateBlog";
 import { fetchBlogs } from "./redux/blogSlicer";
+import SingleBlog from "./pages/SingleBlog";
 
 function App() {
   const dispatch = useDispatch();
@@ -97,6 +98,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/create_blog" element={<CreateBlog />} />
+          <Route path="/blogs/:title" element={<SingleBlog />} />
           <Route
             path="/category"
             element={isAdmin ? <Category /> : <NotFound />}

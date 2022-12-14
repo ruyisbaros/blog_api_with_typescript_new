@@ -38,13 +38,13 @@ export interface ICategory {
     updatedAt: string
 }
 export interface HomeBlog {
-    _id?: string
+    _id: string
     user?: IUser,
     title: string,
     description: string,
     content: string,
     category: ICategory
-    thumbnail: string | File,
+    thumbnail: string,
     createdAt: string,
 }
 export interface IBlog {

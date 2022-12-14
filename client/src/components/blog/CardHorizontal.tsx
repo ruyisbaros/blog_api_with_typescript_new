@@ -16,7 +16,7 @@ const CardHorizontal: React.FC<IProps> = ({ blog }) => {
           {blog.thumbnail && (
             <>
               {typeof blog.thumbnail === "string" ? (
-                <Link to={`/blog/${blog._id}`}>
+                <Link to={`/blogs/${blog._id}`}>
                   <img
                     src={blog.thumbnail}
                     className="w-100 h-100"
