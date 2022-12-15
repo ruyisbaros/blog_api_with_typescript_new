@@ -12,17 +12,16 @@ const otherUserSlicer = createSlice({
   reducers: {
 
     otherUserFetched: (state, action) => {
-      state.otherUser = action.payload
+      state.otherUser = action.payload.user
+      state.blogs = action.payload.blogs
     },
-    otherUserBlogs: (state, action) => {
-      state.blogs = action.payload
-    },
+
 
   },
 });
 
 export const {
-  otherUserBlogs,
+
   otherUserFetched
 } = otherUserSlicer.actions;
 

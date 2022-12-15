@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/userModel"
+import Blog from "../models/blogModel"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import sendMail from "../alerts/send_email"

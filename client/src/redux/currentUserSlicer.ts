@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   currentUser: "",
+  blogs: [],
   token: "",
   message: "",
   logging: false,
@@ -21,6 +22,7 @@ const currentUserSlicer = createSlice({
     userLoggedSuccess: (state, action) => {
       state.logging = false;
       state.currentUser = action.payload.currentUser;
+      state.blogs = action.payload.blogs;
       state.message = action.payload.message;
       state.token = action.payload.token;
     },

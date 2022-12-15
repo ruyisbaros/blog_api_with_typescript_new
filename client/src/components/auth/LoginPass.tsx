@@ -38,6 +38,7 @@ const LoginPass = () => {
       dispatch(
         userLoggedSuccess({
           currentUser: res.data.user,
+          blogs: res.data.blogs,
           message: res.data.message,
           token: res.data.access_token,
         })

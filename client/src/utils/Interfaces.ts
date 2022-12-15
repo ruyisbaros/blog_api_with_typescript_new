@@ -15,6 +15,7 @@ export interface IUser {
 //For redux:currentUser slicer
 export interface ICurrentUser {
     currentUser: IUser,
+    blogs: IBlogs
     message: string
     token: string,
     logging: boolean,

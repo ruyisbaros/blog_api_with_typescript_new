@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import CardVertical from "../components/blog/CardVertical";
 import { IBlogs, ICategories, ICurrentUser } from "../utils/Interfaces";
 import Snipper from "../components/global/Snipper";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBlogs } from "../redux/blogSlicer";
-import loaderGif from "../images/loading.35b947f5.gif";
-import { Interface } from "readline";
 
 const Home = () => {
   const dispatch = useDispatch();

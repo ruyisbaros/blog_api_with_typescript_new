@@ -23,8 +23,7 @@ import SingleBlog from "./pages/SingleBlog";
 
 function App() {
   const dispatch = useDispatch();
-  const blogs = useSelector<IBlogs>((store) => store.blogs);
-  console.log(blogs);
+
   const loadStatus = useSelector<ILoadingStatus>(
     (store) => store.loadStatus.loading
   );

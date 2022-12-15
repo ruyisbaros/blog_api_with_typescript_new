@@ -6,6 +6,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { IOtherUser, IUser } from "../../utils/Interfaces";
 import { otherUserFetched } from "../../redux/otherUserSlicer";
+import Snipper from "../global/Snipper";
+import moment from "moment";
 
 const OtherInfo = () => {
   const dispatch = useDispatch();
@@ -20,7 +22,9 @@ const OtherInfo = () => {
         dispatch(loadingStart());
         const res = await axios.get(`/api/v1/users/get_user/${id}`);
         console.log(res.data);
-        dispatch(otherUserFetched(res.data));
+        dispatch(
+          otherUserFetched({ user: res.data.user, blogs: res.data.blogs })
+        );
 
         dispatch(loadingFinish());
       } catch (error: any) {
@@ -30,8 +34,27 @@ const OtherInfo = () => {
     };
     profile();
   }, [id]);
-
-  return <div>OtherInfo</div>;
+  if (!otherUser) return <Snipper />;
+  return (
+    <div className="profile_info text-center rounded">
+      <div className="info_avatar">
+        <img src={otherUser.avatar} alt={otherUser.name} />
+      </div>
+      <h5 className="text-uppercase text-danger">{otherUser.role}</h5>
+      <h6>
+        Name:{" "}
+        <span className="text-info text-capitalize">{otherUser.name}</span>
+      </h6>
+      <div>Email address / Phone number:</div>
+      <span className="text-info ">{otherUser.account}</span>
+      <div>
+        Join Date:{" "}
+        <span style={{ color: "#ffc107" }}>
+          {moment(otherUser.createdAt).format("MMM Do YY")}
+        </span>
+      </div>
+    </div>
+  );
 };
 
 export default OtherInfo;
