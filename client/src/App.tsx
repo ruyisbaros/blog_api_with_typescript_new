@@ -75,14 +75,6 @@ function App() {
     fetchAllCategories();
   }, [dispatch]);
 
-  useEffect(() => {
-    const fetchAllHomeBlogs = async () => {
-      const res = await axios.get("/api/v1/blogs/home/get_all");
-      dispatch(fetchBlogs(res.data));
-    };
-    fetchAllHomeBlogs();
-  }, [dispatch]);
-
   return (
     <div className="mother_container">
       <BrowserRouter>

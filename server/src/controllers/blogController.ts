@@ -26,49 +26,99 @@ const blogCtrl = {
             res.status(500).json({ message: error.message });
         }
     },
-    getAll: async (req: Request, res: Response) => {
+    getAllTrial: async (req: Request, res: Response) => {
+        //console.log(req.query);
+        let options = {}
+        if (req.query.category) {
+            options = {
+                ...options,
+                category: req.query.category
+            }
+        }
+        if (req.query.user) {
+            options = {
+                ...options,
+                user: req.query.user
+            }
+        }
+        console.log(options);
+        try {
+            const blogs = await Blog.find(options)
+                .populate({ path: "user", select: "-password" })
+                .populate({ path: "category" })
+                .sort("-createdAt")
+                .limit(Number(req.query.limit))
 
+            return res.status(200).json(blogs)
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
     },
     getOne: async (req: Request, res: Response) => {
         const blog = await Blog.findById(req.params.id)
         if (!blog) return res.status(404).json({ message: "Blog not found" })
         return res.status(200).json(blog)
     },
-    getHomeBlogs: async (req: Request, res: Response) => {
-        /* const blogs = await Blog.aggregate([
-            {
-                $lookup: {
-                    from: "User",
-                    let: { user_id: "$user" },
-                    pipeline: [
-                        { $match: { $expr: { $eq: ["$_id", "$$user_id"] } } },
-                        { $project: { password: 0 } }
-                    ],
-                    as: "user"
-                }
-            },
-            { $unwind: "$user" },
-            // Category
-            {
-                $lookup: {
-                    "from": "Category",
-                    "localField": "category",
-                    "foreignField": "_id",
-                    "as": "category"
-                }
-            },
-            // array -> object
-            { $unwind: "$category" },
-            // Sorting
-            { $sort: { "createdAt": -1 } },
-        ]) */
-        const blogs = await Blog.find()
-            .populate({ path: "user", select: "-password" })
-            .populate({ path: "category" })
-            .sort("-createdAt")
+    getByCategory: async (req: Request, res: Response) => {
+        try {
+            const blogs = await Blog.find({ category: req.params.id })
+                .populate({ path: "user", select: "-password" })
+                .populate({ path: "category" })
+                .sort("-createdAt")
 
-        return res.status(200).json(blogs)
+            return res.status(200).json(blogs)
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
     },
+    getByCreator: async (req: Request, res: Response) => {
+        try {
+            const blogs = await Blog.find({ user: req.params.id })
+                .populate({ path: "user", select: "-password" })
+                .populate({ path: "category" })
+                .sort("-createdAt")
+
+            return res.status(200).json(blogs)
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
+    getHomeBlogs: async (req: Request, res: Response) => {
+
+
+        let options = {}
+        if (req.query.category) {
+            options = {
+                ...options,
+                category: req.query.category
+            }
+        }
+        if (req.query.user) {
+            options = {
+                ...options,
+                user: req.query.user
+            }
+        }
+        const blogCount = await Blog.count(options)
+        console.log(blogCount);
+        //console.log(options);
+        let limit: number;
+        req.query.limit ? limit = Number(req.query.limit) : limit = 20
+        //console.log(limit);
+        try {
+            const blogs = await Blog.find(options)
+                .populate({ path: "user", select: "-password" })
+                .populate({ path: "category" })
+                .sort("-createdAt")
+                .limit(limit)
+
+            return res.status(200).json({ blogs, blogCount })
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
     update: async (req: Request, res: Response) => { },
     delete: async (req: Request, res: Response) => { },
 }

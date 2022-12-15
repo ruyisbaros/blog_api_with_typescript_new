@@ -1,23 +1,78 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import CardVertical from "../components/blog/CardVertical";
-import { IBlogs, ICurrentUser } from "../utils/Interfaces";
+import { IBlogs, ICategories, ICurrentUser } from "../utils/Interfaces";
+import Snipper from "../components/global/Snipper";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBlogs } from "../redux/blogSlicer";
+import loaderGif from "../images/loading.35b947f5.gif";
+import { Interface } from "readline";
 
 const Home = () => {
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const blogs = useSelector<IBlogs>((store) => store.blogs);
   const homeBlogs = blogs as IBlogs;
-  console.log(blogs);
-  //console.log(typeof homeBlogs);
+  const categoryBox = useSelector<ICategories>((store) => store.categories);
+  const { categories } = categoryBox as ICategories;
   const currentUserBox = useSelector<ICurrentUser>(
     (store) => store.currentUser
   );
   const { currentUser, token } = currentUserBox as ICurrentUser;
+  const [page, setPage] = useState(1);
+  const [category, setCategory] = useState("");
+  const [user, setUser] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [totalBlogCount, setTotalBlogCount] = useState(0);
 
+  const handleScroll = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setPage((prev) => prev + 1);
+      window.scrollTo(0, document.body.scrollHeight);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    const fetchAllHomeBlogs = async () => {
+      const res = await axios.get(
+        `/api/v1/blogs/home/get_all?category=${category}&user=${user}&limit=${
+          page * 3
+        }`
+      );
+      setTotalBlogCount(res.data.blogCount);
+      dispatch(fetchBlogs(res.data.blogs));
+      setLoading(false);
+    };
+
+    fetchAllHomeBlogs();
+  }, [dispatch, page, category]);
+
+  if (homeBlogs.blogs.length === 0) return <Snipper />;
   return (
     <div className="home_page">
+      <div className="filetrs-main">
+        <div className="filter_content">
+          <span>Filter:</span>
+          <select
+            name="category"
+            id=""
+            value={category}
+            onChange={(e) => {
+              setCategory(e.target.value);
+              setPage(1);
+            }}
+          >
+            <option value="">All Blogs</option>
+            {categories?.map((cat) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
       {homeBlogs.blogs.map((blog) => (
         <div className="blog-box" key={blog._id}>
           <h5 className="text-end">
@@ -68,9 +123,16 @@ const Home = () => {
               />
             </div>
           </div>
-          <hr className="mt-1" />
         </div>
       ))}
+      {homeBlogs.blogs.length < totalBlogCount && (
+        <div
+          onClick={handleScroll}
+          className={loading ? "load_more_icon loading" : "load_more_icon"}
+        >
+          {!loading && <i className="fa-solid fa-download"></i>}
+        </div>
+      )}
     </div>
   );
 };
