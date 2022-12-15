@@ -7,9 +7,7 @@ router.post("/create", protect, BlogCtrl.create)
 
 router.get("/get_one/:id", BlogCtrl.getOne)
 router.get("/home/get_all", BlogCtrl.getHomeBlogs)
-router.get("/get_trial", BlogCtrl.getAllTrial)
 router.get("/creator/get_all/:id", BlogCtrl.getByCreator)
-router.get("/category/get_all/:id", BlogCtrl.getByCategory)
 router.patch("/update/:id", protect, BlogCtrl.getOne)
 router.delete("/delete/:id", protect, BlogCtrl.getOne)
 

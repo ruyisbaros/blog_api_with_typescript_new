@@ -19,7 +19,7 @@ const Home = () => {
   const { currentUser, token } = currentUserBox as ICurrentUser;
   const [page, setPage] = useState(1);
   const [category, setCategory] = useState("");
-  const [user, setUser] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [totalBlogCount, setTotalBlogCount] = useState(0);
 
@@ -34,9 +34,7 @@ const Home = () => {
   useEffect(() => {
     const fetchAllHomeBlogs = async () => {
       const res = await axios.get(
-        `/api/v1/blogs/home/get_all?category=${category}&user=${user}&limit=${
-          page * 3
-        }`
+        `/api/v1/blogs/home/get_all?category=${category}&limit=${page * 3}`
       );
       setTotalBlogCount(res.data.blogCount);
       dispatch(fetchBlogs(res.data.blogs));

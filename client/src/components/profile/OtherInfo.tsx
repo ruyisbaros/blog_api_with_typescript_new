@@ -22,9 +22,7 @@ const OtherInfo = () => {
         dispatch(loadingStart());
         const res = await axios.get(`/api/v1/users/get_user/${id}`);
         console.log(res.data);
-        dispatch(
-          otherUserFetched({ user: res.data.user, blogs: res.data.blogs })
-        );
+        dispatch(otherUserFetched(res.data));
 
         dispatch(loadingFinish());
       } catch (error: any) {

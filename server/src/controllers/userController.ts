@@ -1,14 +1,13 @@
 import { ILogUser, IReqAuth } from './../config/interface';
 import { Request, Response } from "express";
 import User from "../models/userModel"
-import Blog from "../models/blogModel"
 import bcrypt from "bcrypt"
 
 const userCtrl = {
     getOneUser: async (req: Request, res: Response) => {
         const user = <ILogUser>await User.findOne({ _id: req.params.id }).select('-password')
-        const blogs = await Blog.find({ user: user._id })
-        res.status(200).json({ user, blogs })
+
+        res.status(200).json(user)
     },
     getAllUsers: async (req: Request, res: Response) => {
 

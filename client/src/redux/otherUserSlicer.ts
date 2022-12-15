@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   otherUser: "",
-  blogs: []
+
 };
 
 const otherUserSlicer = createSlice({
@@ -12,8 +12,7 @@ const otherUserSlicer = createSlice({
   reducers: {
 
     otherUserFetched: (state, action) => {
-      state.otherUser = action.payload.user
-      state.blogs = action.payload.blogs
+      state.otherUser = action.payload
     },
 
 
