@@ -14,9 +14,6 @@ const UserInfo = () => {
   const currentUser = useSelector<ICurrentUser>((store) => store.currentUser);
   const userObj = currentUser as ICurrentUser;
   console.log(userObj);
-  const [passType, setPassType] = useState(false);
-
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [userProfile, setUserProfile] = useState({
     name: userObj.currentUser.name,
     account: userObj.currentUser.account,

@@ -31,6 +31,10 @@ export interface ICategories {
 export interface IBlogs {
     blogs: HomeBlog[]
 }
+export interface IOtherUser {
+    otherUser: IUser,
+    blogs?: IBlogs
+}
 export interface ICategory {
     _id?: string
     name: string
