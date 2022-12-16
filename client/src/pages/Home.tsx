@@ -34,7 +34,7 @@ const Home = () => {
   useEffect(() => {
     const fetchAllHomeBlogs = async () => {
       const res = await axios.get(
-        `/api/v1/blogs/home/get_all?category=${category}&limit=${page * 3}`
+        `/api/v1/blogs/get_all?category=${category}&limit=${page * 3}`
       );
       setTotalBlogCount(res.data.blogCount);
       dispatch(fetchBlogs(res.data.blogs));

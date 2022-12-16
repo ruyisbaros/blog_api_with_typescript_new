@@ -61,19 +61,6 @@ export interface IBlog {
     thumbnail: string | File,
     createdAt: string,
 }
-/* export interface IImageFile {
-    file?: File
-} */
-/* export interface IUserRegisterInput {
-    name: string
-    account: string
-    password: string
-}
-export interface IUserRegisterResponse {
-    name: string
-    account: string
-    password: string
-} */
 
 export type InputChange = ChangeEvent<
     | HTMLInputElement

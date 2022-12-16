@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { IBlog } from "../../utils/Interfaces";
+import { HomeBlog, IBlog } from "../../utils/Interfaces";
 
 interface IProps {
-  blog: IBlog;
+  blog: HomeBlog | IBlog;
 }
 const CardHorizontal: React.FC<IProps> = ({ blog }) => {
   return (

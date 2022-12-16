@@ -46,12 +46,18 @@ const blogCtrl = {
         }
     },
 
-    getHomeBlogs: async (req: Request, res: Response) => {
+    getAllBlogs: async (req: Request, res: Response) => {
         let options = {}
         if (req.query.category) {
             options = {
                 ...options,
                 category: req.query.category
+            }
+        }
+        if (req.query.user) {
+            options = {
+                ...options,
+                user: req.query.user
             }
         }
 

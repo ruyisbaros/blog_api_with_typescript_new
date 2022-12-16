@@ -89,7 +89,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/create_blog" element={<CreateBlog />} />
-          <Route path="/blogs/:title" element={<SingleBlog />} />
+          <Route path="/blogs/:id" element={<SingleBlog />} />
           <Route
             path="/category"
             element={isAdmin ? <Category /> : <NotFound />}
