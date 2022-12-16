@@ -29,6 +29,8 @@ const blogCtrl = {
 
     getOne: async (req: Request, res: Response) => {
         const blog = await Blog.findById(req.params.id)
+            .populate({ path: "user", select: "-password" })
+            .populate({ path: "category" })
         if (!blog) return res.status(404).json({ message: "Blog not found" })
         return res.status(200).json(blog)
     },

@@ -29,3 +29,13 @@ export interface IDecodedToken {
 export interface IReqAuth extends Request {
     user?: ILogUser
 }
+
+export interface IComment extends Document {
+    owner: string,
+    blog_id: string,
+    blog_user_id: string,
+    replyCM: string[],
+    reply_user: string,
+    content: string,
+    _doc: object
+}

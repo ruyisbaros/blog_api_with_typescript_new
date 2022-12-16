@@ -28,6 +28,7 @@ app.use("/api/v1/auth", routes.authRouter)
 app.use("/api/v1/users", routes.userRouter)
 app.use("/api/v1/categories", routes.categoryRouter)
 app.use("/api/v1/blogs", routes.blogRouter)
+app.use("/api/v1/comments", routes.commentRouter)
 
 //Server configuration
 const port = process.env.PORT || 3002
